@@ -1,4 +1,4 @@
-module github.com/pet
+module github.com/go-check-hdrezka
 
 go 1.20
 

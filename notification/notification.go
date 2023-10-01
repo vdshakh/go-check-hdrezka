@@ -1,17 +1,18 @@
-package main
+package notification
 
 import (
 	"fmt"
 	"github.com/0xAX/notificator"
 	"github.com/faiface/beep/mp3"
 	"github.com/faiface/beep/speaker"
+	"github.com/go-check-hdrezka/request"
 	"os"
 	"time"
 )
 
-const soundFile = "media/sound.mp3"
+const soundFile = "notification/media/sound.mp3"
 
-func playSound() {
+func PlaySound() {
 	sound, err := os.Open(soundFile)
 	if err != nil {
 		fmt.Errorf("unable to open sound file: %v", err)
@@ -28,12 +29,12 @@ func playSound() {
 	speaker.Play(streamer)
 }
 
-func sendPush(request Req) {
+func SendPush(userRequest request.Req) {
 	notify := notificator.New(notificator.Options{
 		AppName: "HDRezka Updates",
 	})
 
-	if err := notify.Push("Updates are here!", request.Title+" series in "+request.Voiceover+" voiceover is released", "", notificator.UR_NORMAL); err != nil {
+	if err := notify.Push("Updates are here!", userRequest.Title+" series in "+userRequest.Voiceover+" voiceover is released", "", notificator.UR_NORMAL); err != nil {
 		fmt.Errorf("error pushing notification: %v", err)
 		os.Exit(1)
 	}
